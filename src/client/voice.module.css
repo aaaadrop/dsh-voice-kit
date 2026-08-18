@@ -1,0 +1,87 @@
+.iconButton {
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--dsw-alias-label-tertiary, inherit);
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  transition: background 120ms ease;
+}
+
+.iconButton:hover:not(:disabled) {
+  background: var(--dsw-alias-interactive-bg-hover, rgba(128, 128, 128, 0.15));
+}
+
+.iconButton:disabled {
+  cursor: default;
+  opacity: 0.45;
+}
+
+.listening {
+  color: var(--dsw-alias-state-business-primary, #4d6bfe);
+  animation: voice-pulse 1.2s ease-in-out infinite;
+}
+
+.speaking {
+  color: var(--dsw-alias-state-business-primary, #4d6bfe);
+}
+
+.readerWrap {
+  position: relative;
+  display: inline-flex;
+}
+
+.readingBubble {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  right: 0;
+  /* Force natural width so a narrow parent cannot squeeze it into
+     one-character lines ("vertical" text). */
+  width: max-content;
+  min-width: 140px;
+  max-width: 280px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: var(--dsw-alias-bg-elevated, #ffffff);
+  border: 1px solid var(--dsw-alias-border-l1, rgba(128, 128, 128, 0.3));
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  color: var(--dsw-alias-label-primary, inherit);
+  font-size: 12px;
+  line-height: 1.5;
+  z-index: 50;
+  white-space: normal;
+  word-break: break-word;
+  pointer-events: none;
+}
+
+@keyframes voice-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+}
+
+.settingsCard {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 8px 4px;
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--dsw-alias-label-primary, inherit);
+}
+
+.field select,
+.field input[type='range'] {
+  flex: 1;
+  min-width: 0;
+}

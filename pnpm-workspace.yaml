@@ -1,0 +1,7 @@
+packages:
+  - .
+
+allowBuilds:
+  # msedge-tts's only build script is `preinstall: npx only-allow pnpm` —
+  # enforcement only, safe to skip.
+  msedge-tts: false
