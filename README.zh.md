@@ -4,12 +4,12 @@ DeepSeek Harness Web GUI 的语音输入（Web Speech API）与回复朗读（sp
 
 [English](README.md)
 
-> **状态：v0.3，构建全绿** — `pnpm typecheck` 通过、35 个单测通过、
+> **状态：v0.3.1，已发布 npm** — `pnpm typecheck` 通过、35 个单测通过、
 > `pnpm build` 产出生态标准 closure-factory bundle（宿主半区 + 浏览器半区）。
 > 语音输入与回复朗读已按真实 conversation API 接线（session kit 的
 > `inputActions`/`useInput`/`useSession`）；朗读支持**微软 Edge 神经语音**
 > （host 侧经 `msedge-tts` 合成、带缓存、失败自动回退系统语音）。
-> 已在真实 DSH Desktop profile 里验证通过。
+> 已在真实 DSH Desktop profile 里验证通过。安装：`dsh plugin add dsh-voice-kit`。
 
 ## 功能
 

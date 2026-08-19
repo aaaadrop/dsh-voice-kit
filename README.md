@@ -5,13 +5,14 @@ Voice input (Web Speech API) and read-aloud (speechSynthesis) for the
 
 [中文说明](README.zh.md)
 
-> **Status: v0.3, building green** — `pnpm typecheck` passes, 35 unit tests
-> pass, `pnpm build` emits the ecosystem-standard closure-factory bundle
+> **Status: v0.3.1, published on npm** — `pnpm typecheck` passes, 35 unit
+> tests pass, `pnpm build` emits the ecosystem-standard closure-factory bundle
 > (host half + browser half). Voice input and read-aloud are wired against
 > the real conversation API (session kit's `inputActions`/`useInput`/
 > `useSession`), and read-aloud supports **Microsoft Edge neural voices**
 > (host-side synthesis via `msedge-tts`, cached, with automatic fallback to
-> the system voice). Verified inside a real DSH Desktop profile.
+> the system voice). Verified inside a real DSH Desktop profile. Install:
+> `dsh plugin add dsh-voice-kit`.
 
 ## Features
 
