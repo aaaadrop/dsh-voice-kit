@@ -41,9 +41,13 @@ dsh plugin add dsh-voice-kit
 dsh plugin --profile web add link:/path/to/dsh-voice-kit
 ```
 
-Restart the harness, refresh the web GUI. Chromium-based browsers only for
-voice input (Chrome / Edge / Electron); read-aloud works wherever
-`speechSynthesis` exists.
+Restart the harness, refresh the web GUI.
+
+> ⚠️ **Voice input is experimental.** `webkitSpeechRecognition` is a
+> Chromium feature and does **not** work inside Electron (DSH Desktop): the
+> mic button enters the listening state but no transcript ever lands. It may
+> work in Chrome/Edge when DSH is served in a regular browser. **Read-aloud
+> works everywhere** (system voice fallback included).
 
 ## Development
 

@@ -34,11 +34,18 @@ export interface MicButtonProps {
 
 type ListeningState = 'idle' | 'listening' | 'unsupported' | 'error'
 
+/** Consecutive listen sessions with zero transcript before we call it quits. */
+const DEAD_SESSION_LIMIT = 2
+
 export function MicButton(props: MicButtonProps): JSX.Element {
   const { sessionId, locale, language, className } = props
   const [state, setState] = useState<ListeningState>('idle')
   const recognizerRef = useRef<VoiceRecognizer | null>(null)
   const bufferRef = useRef<string[]>([])
+  // Electron exposes SpeechRecognition but never delivers transcripts — track
+  // consecutive silent sessions and surface 'unsupported' instead of faking it.
+  const silentSessionsRef = useRef(0)
+  const heardAnythingRef = useRef(false)
 
   useEffect(() => {
     return () => {
@@ -62,12 +69,25 @@ export function MicButton(props: MicButtonProps): JSX.Element {
 
   const stop = (): void => {
     recognizerRef.current?.stop()
+    // Count this session only on a genuine user stop (cancel-before-new-
+    // session must not double count).
+    if (!heardAnythingRef.current) {
+      silentSessionsRef.current += 1
+    } else {
+      silentSessionsRef.current = 0
+    }
     commitTranscript()
   }
 
   const toggle = (): void => {
     if (state === 'listening') {
       stop()
+      return
+    }
+    // Once the recognizer has repeatedly produced nothing, don't keep faking
+    // availability (Electron desktop case).
+    if (silentSessionsRef.current >= DEAD_SESSION_LIMIT) {
+      setState('unsupported')
       return
     }
     // Kill any previous recognizer first (its auto-restart timer would
@@ -77,6 +97,7 @@ export function MicButton(props: MicButtonProps): JSX.Element {
     bufferRef.current = []
     recognizerRef.current?.cancel()
     recognizerRef.current = null
+    heardAnythingRef.current = false
     // Recognition language from live settings ('auto' falls back to zh-CN).
     const settings = props.voiceSettings?.() ?? {}
     const settingLang = settings.language ?? 'auto'
@@ -84,6 +105,7 @@ export function MicButton(props: MicButtonProps): JSX.Element {
     const recognizer = createVoiceRecognizer(language ?? recogLang, {
       onResult: (text, isFinal) => {
         if (isFinal) {
+          heardAnythingRef.current = true
           bufferRef.current.push(text)
         }
       },

@@ -34,8 +34,12 @@ dsh plugin add dsh-voice-kit
 dsh plugin --profile web add link:/path/to/dsh-voice-kit
 ```
 
-重启 harness 并刷新 Web GUI。语音输入仅支持 Chromium 系浏览器
-（Chrome / Edge / Electron）；朗读在支持 `speechSynthesis` 的环境即可用。
+重启 harness 并刷新 Web GUI。
+
+> ⚠️ **语音输入为实验特性。** `webkitSpeechRecognition` 是 Chromium 的功能，
+> 在 Electron（DSH Desktop）里**不工作**：麦克风按钮会进入聆听状态，但
+> 不会产生任何转写文字。在普通浏览器（Chrome/Edge）里打开 DSH 时可能可用。
+> **朗读功能在所有环境可用**（含系统语音回退）。
 
 ## 开发
 
